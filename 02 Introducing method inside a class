@@ -1,0 +1,32 @@
+
+public class Teacher {
+    String name,sex;
+    int age;
+    
+    void display_info(){            // display_info eita method 
+        
+    System.out.println("name="+name);  
+    System.out.println("sex="+sex);
+    System.out.println("age="+age);
+     System.out.println();
+    }
+    
+    public static void main(String[] args) {
+        Teacher teacher1=new Teacher();
+        Teacher teacher2=new Teacher();
+        
+        teacher1.name="tohidur rahman";
+        teacher1.sex="male";
+        teacher1.age=26;
+        teacher1.display_info();
+
+    
+        teacher2.name="nishat rahman";
+        teacher2.sex="female";
+        teacher2.age=25;
+        teacher2.display_info();
+        
+    
+    
+    }
+}
