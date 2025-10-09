@@ -1,0 +1,14 @@
+public class Return_value{
+    int square (int value){
+        return value*value;
+    }
+    
+public static void main(String[] args){
+    Return_value op1=new Return_value ();
+    System.out.println("square:"+op1.square(5));
+        
+    Return_value op2=new Return_value ();
+    System.out.println("square:"+op2.square(7));
+        
+}      
+}
