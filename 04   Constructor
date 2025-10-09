@@ -1,0 +1,36 @@
+
+public class Teacher {
+    String name,sex;
+    int age;
+    
+    
+    void set_info(String n,String s,int ag){
+        name=n;
+        sex=s;
+        age=ag;
+        
+    }
+    
+    void display_info(){
+        
+    System.out.println("name="+name);  
+    System.out.println("sex="+sex);
+    System.out.println("age="+age);
+     System.out.println();
+    }
+    
+    public static void main(String[] args) {
+        Teacher teacher1=new Teacher();
+        Teacher teacher2=new Teacher();
+        
+        teacher1.set_info("tohidur rahman","male",25);
+        teacher1.display_info();
+
+    
+    
+        teacher2.set_info("nishat rahman","female",24);
+        teacher2.display_info();
+       
+    
+    }
+}
