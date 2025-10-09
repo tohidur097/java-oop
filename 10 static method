@@ -1,0 +1,21 @@
+public class Student {
+
+    void display1() {
+        System.out.println("i am non static");
+        
+    }
+    
+     static void display2() {
+        System.out.println("i am static");
+        
+    }
+    
+    public static void main(String[] args) {
+        
+        Student s1 = new Student();
+        s1.display1();
+        
+        Student.display2(); 
+      
+    }
+}
