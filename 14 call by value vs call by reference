@@ -1,0 +1,18 @@
+public class CallByReference {
+    
+    String name;
+    
+    void change(CallByReference r2) {
+        r2.name = "tohidur";
+    }
+
+    public static void main(String[] args) {
+        CallByReference r1 = new CallByReference();
+        r1.name = "nishat";
+        System.out.println("Before calling: " + r1.name); // Before calling: nishat
+
+        r1.change(r1); // r1 এর name এখন "tohidur" হয়ে যাবে
+
+        System.out.println("After calling: " + r1.name);  // After calling: tohidur
+    }    
+}
