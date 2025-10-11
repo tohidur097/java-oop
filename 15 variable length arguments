@@ -1,0 +1,17 @@
+public class AddDemo {
+    
+    // Varargs method
+    void Add(int... number) {
+        int sum = 0;
+        for (int x : number) {  // সব সংখ্যাকে যোগ করা হচ্ছে
+            sum = sum + x;
+        }
+        System.out.println("Sum = " + sum);
+    }
+
+    public static void main(String[] args) {
+        AddDemo ob = new AddDemo();
+        ob.Add(10, 20);                 // দুইটা সংখ্যা -> 30
+        ob.Add(10, 20, 13, 100, 12);    // পাঁচটা সংখ্যা -> 155
+    }    
+}
