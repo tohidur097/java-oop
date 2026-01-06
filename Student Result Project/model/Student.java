@@ -11,6 +11,14 @@ public class Student extends Person {
         this.batch = batch;
     }
 
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }    
+
     public String getDept() {
         return dept;
     }
@@ -19,19 +27,11 @@ public class Student extends Person {
         return batch;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
-    }
-
-    public void setBatch(String batch) {
-        this.batch = batch;
-    }
-
     public String getStudent() {
         String data = "";
-        data += "ID    : " + id + "\n";
-        data += "Name  : " + name + "\n";
-        data += "Email : " + email + "\n";
+        data += "ID    : " + getId() + "\n";
+        data += "Name  : " + getName() + "\n";
+        data += "Email : " + getEmail() + "\n";
         data += "Dept  : " + dept + "\n";
         data += "Batch : " + batch + "\n";
         return data;

@@ -1,5 +1,4 @@
 package File;
-
 import model.*;
 import java.io.*;
 import java.util.Scanner;
@@ -8,12 +7,12 @@ public class FileIO {
 
     public static void loadFromFile(Student[] students, Result[] results) {
         try {
-            // ===== Load students =====
             Scanner sc = new Scanner(new File("./File/students.txt"));
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty())
+                    continue;
 
                 String[] data = line.split(";");
                 int index = Integer.parseInt(data[0]);
@@ -28,15 +27,15 @@ public class FileIO {
                 results[index].setStudentId(id);
             }
             sc.close();
-
-            // ===== Load results/subjects =====
             File f = new File("./File/results.txt");
-            if (!f.exists()) return; // results file না থাকলেও run হবে
+            if (!f.exists())
+                return;
 
             sc = new Scanner(f);
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty())
+                    continue;
 
                 String[] data = line.split(";");
 
@@ -62,12 +61,11 @@ public class FileIO {
 
     public static void saveChangesInFile(Student[] students, Result[] results) {
         try {
-            // ===== Save students =====
             BufferedWriter bw = new BufferedWriter(new FileWriter("./File/students.txt"));
 
             for (int i = 0; i < students.length; i++) {
                 if (students[i] != null) {
-                    // index;id;name;email;dept;batch
+
                     String line = i + ";" +
                             students[i].getId() + ";" +
                             students[i].getName() + ";" +
@@ -80,15 +78,13 @@ public class FileIO {
             }
             bw.close();
 
-            // ===== Save results/subjects =====
             bw = new BufferedWriter(new FileWriter("./File/results.txt"));
 
             for (int i = 0; i < results.length; i++) {
                 if (students[i] != null && results[i] != null) {
-                    Subject[] subs = results[i].getAllSubjects(); // তুমি add করেছিলে
+                    Subject[] subs = results[i].getAllSubjects();
                     for (int pos = 0; pos < subs.length; pos++) {
                         if (subs[pos] != null) {
-                            // studentIndex;subjectPos;code;title;credit;marks
                             String line = i + ";" + pos + ";" +
                                     subs[pos].getCode() + ";" +
                                     subs[pos].getTitle() + ";" +

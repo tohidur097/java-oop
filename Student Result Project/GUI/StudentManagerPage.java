@@ -1,17 +1,14 @@
 package GUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import model.*;
-import File.*;   // FileIO
-// import java.util.Random; // team project এ ছিল, এখানে লাগছে না
+import File.*;
 
 public class StudentManagerPage extends JFrame implements ActionListener, MouseListener {
 
     Font font15 = new Font("Consolas", Font.BOLD, 15);
 
-    // ===== Labels =====
     JLabel title;
     JLabel studentLabel, marksLabel;
 
@@ -19,7 +16,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
 
     JLabel marksStudentIndexLabel, subjectPosLabel, codeLabel, subTitleLabel, creditLabel, marksValueLabel;
 
-    // ===== Buttons =====
     JButton createStudentButton, updateStudentButton, removeStudentButton;
     JButton addSubjectButton, removeSubjectButton;
 
@@ -27,17 +23,14 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
 
     JButton searchButton, saveChangesButton;
 
-    // ===== TextFields =====
     JTextField studentIndexTF, studentIdTF, studentNameTF, studentEmailTF, studentDeptTF, studentBatchTF;
 
     JTextField marksStudentIndexTF, subjectPosTF, codeTF, subTitleTF, creditTF, marksTF;
 
     JTextField searchTF;
 
-    // ===== Screen =====
     JTextArea screen;
 
-    // ===== Data =====
     Student[] students = new Student[100];
     Result[] results = new Result[100];
 
@@ -50,15 +43,12 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         this.setResizable(false);
         this.setLayout(null);
 
-        // Result array init (null crash avoid)
         for (int i = 0; i < results.length; i++) {
             results[i] = new Result();
         }
 
-        // ✅ Load from file (Team project এর মতো)
         FileIO.loadFromFile(students, results);
 
-        // ===== Top Bar =====
         title = createLabel(10, 0, 350, 30, "Student Result Management");
 
         searchTF = createTextField(380, 5, 150, 30, "");
@@ -67,7 +57,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         saveChangesButton = createButton(690, 5, 180, 30, "Save Changes");
         saveChangesButton.setBackground(Color.YELLOW);
 
-        // ===== Student Section =====
         studentLabel = createLabel(10, 40, 220, 30, "Create / Edit Student");
 
         studentClearButton = createButton(250, 40, 100, 30, "Clear");
@@ -101,7 +90,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         removeStudentButton.setBackground(Color.RED);
         removeStudentButton.setForeground(Color.WHITE);
 
-        // ===== Marks Section =====
         marksLabel = createLabel(10, 410, 250, 30, "Subject-wise Marks");
 
         subjectClearButton = createButton(250, 410, 100, 30, "Clear");
@@ -130,7 +118,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         removeSubjectButton.setBackground(Color.RED);
         removeSubjectButton.setForeground(Color.WHITE);
 
-        // ===== Screen =====
         screen = new JTextArea();
         screen.setFont(font15);
         screen.setEditable(false);
@@ -142,7 +129,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         this.setVisible(true);
     }
 
-    // ===== Helper methods (TeamManagerPage style) =====
     JLabel createLabel(int x, int y, int w, int h, String text) {
         JLabel c = new JLabel(text);
         c.setBounds(x, y, w, h);
@@ -171,7 +157,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         return c;
     }
 
-    // ===== Screen update (Team.getTeam() style string build) =====
     public void updateScreen() {
         String all = "";
         for (int i = 0; i < students.length; i++) {
@@ -185,21 +170,27 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         screen.setText(all);
     }
 
-    // ===== Basic parsers =====
     private int toInt(String s) {
-        try { return Integer.parseInt(s.trim()); }
-        catch (Exception e) { return -1; }
-    }
-    private double toDouble(String s) {
-        try { return Double.parseDouble(s.trim()); }
-        catch (Exception e) { return -1; }
+        try {
+            return Integer.parseInt(s.trim());
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
-    // ===== Actions =====
+    private double toDouble(String s) {
+        try {
+            return Double.parseDouble(s.trim());
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // Create Student
+    
         if (e.getSource() == createStudentButton) {
             int idx = toInt(studentIndexTF.getText());
             String id = studentIdTF.getText().trim();
@@ -209,7 +200,8 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             String batch = studentBatchTF.getText().trim();
 
             if (idx < 0 || idx >= students.length || id.isEmpty() || name.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter valid Index, ID, Name!", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Enter valid Index, ID, Name!", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (students[idx] != null) {
@@ -222,7 +214,7 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             updateScreen();
         }
 
-        // Update Student
+        
         else if (e.getSource() == updateStudentButton) {
             int idx = toInt(studentIndexTF.getText());
             if (idx < 0 || idx >= students.length || students[idx] == null) {
@@ -230,7 +222,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
                 return;
             }
 
-            // Student class এ setters থাকা লাগবে
             students[idx].setName(studentNameTF.getText().trim());
             students[idx].setEmail(studentEmailTF.getText().trim());
             students[idx].setDept(studentDeptTF.getText().trim());
@@ -239,7 +230,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             updateScreen();
         }
 
-        // Remove Student
         else if (e.getSource() == removeStudentButton) {
             int idx = toInt(studentIndexTF.getText());
             if (idx < 0 || idx >= students.length || students[idx] == null) {
@@ -254,7 +244,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             }
         }
 
-        // Add/Update Subject
         else if (e.getSource() == addSubjectButton) {
             int sIdx = toInt(marksStudentIndexTF.getText());
             int pos = toInt(subjectPosTF.getText());
@@ -269,11 +258,13 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
                 return;
             }
             if (pos < 0) {
-                JOptionPane.showMessageDialog(this, "Invalid subject position!", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid subject position!", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (code.isEmpty() || credit < 0 || marks < 0) {
-                JOptionPane.showMessageDialog(this, "Enter valid Code/Credit/Marks!", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Enter valid Code/Credit/Marks!", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -286,7 +277,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             updateScreen();
         }
 
-        // Remove Subject
         else if (e.getSource() == removeSubjectButton) {
             int sIdx = toInt(marksStudentIndexTF.getText());
             int pos = toInt(subjectPosTF.getText());
@@ -301,7 +291,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             }
         }
 
-        // Clear student form
         else if (e.getSource() == studentClearButton) {
             studentIndexTF.setText("");
             studentIdTF.setText("");
@@ -311,7 +300,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             studentBatchTF.setText("");
         }
 
-        // Clear subject form
         else if (e.getSource() == subjectClearButton) {
             marksStudentIndexTF.setText("");
             subjectPosTF.setText("");
@@ -321,7 +309,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
             marksTF.setText("");
         }
 
-        // Search
         else if (e.getSource() == searchButton) {
             int idx = toInt(searchTF.getText());
             if (idx < 0 || idx >= students.length || students[idx] == null) {
@@ -333,7 +320,6 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
                     + results[idx].getResult() + "\n");
         }
 
-        // Save Changes
         else if (e.getSource() == saveChangesButton) {
             if (JOptionPane.showConfirmDialog(this, "Save Changes?") == JOptionPane.YES_OPTION) {
                 FileIO.saveChangesInFile(students, results);
@@ -342,10 +328,14 @@ public class StudentManagerPage extends JFrame implements ActionListener, MouseL
         }
     }
 
-    // ===== Mouse effects (same vibe) =====
-    public void mouseClicked(MouseEvent me) {}
-    public void mousePressed(MouseEvent me) {}
-    public void mouseReleased(MouseEvent me) {}
+    public void mouseClicked(MouseEvent me) {
+    }
+
+    public void mousePressed(MouseEvent me) {
+    }
+
+    public void mouseReleased(MouseEvent me) {
+    }
 
     public void mouseEntered(MouseEvent me) {
         if (me.getSource() == createStudentButton) {
